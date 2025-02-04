@@ -102,6 +102,7 @@ module LatexYearlyPlanner
                     reflow: true,
                     table(
                       stroke: (x, y) => (left: 0.4pt, right: 0.4pt),
+                      inset: 0pt,
                       columns: (#{side_menu_columns}),
                       rows: 1fr,
                       align: horizon + center,
@@ -137,7 +138,7 @@ module LatexYearlyPlanner
                 months.reverse!
               end
 
-              side_menu = [quarters.join(', '), '[]', months.join(', ')]
+              side_menu = [quarters.join(', '), 'table.cell(inset: 5pt, [])', months.join(', ')]
 
               side_menu.reverse! if mosnav[:reverse_arrays]
 
@@ -147,20 +148,18 @@ module LatexYearlyPlanner
             def make_side_menu_quarters
               params.quarters.map do |q|
                 name = i18n.t('calendar.one_letter.quarter')
+                highlighted = highlight_side_menu_quarters.include?(q)
 
-                next "link(<#{q.id}>, [#{name}#{q.number}])" unless highlight_side_menu_quarters.include?(q)
-
-                "table.cell(fill: black, link(<#{q.id}>, text(white)[#{name}#{q.number}]))"
+                "link(<#{q.id}>, block(width: 100%, height: 100%, #{"fill: black, text(white)" if highlighted}[#{name}#{q.number}]))"
               end
             end
 
             def make_side_menu_months
               params.months.map do |m|
                 name = i18n.t("calendar.short.month.#{m.name.downcase}")
+                highlighted = highlight_side_menu_months.include?(m)
 
-                next "link(<#{m.id}>, [#{name}])" unless highlight_side_menu_months.include?(m)
-
-                "table.cell(fill: black, link(<#{m.id}>, text(white)[#{name}]))"
+                "link(<#{m.id}>, block(width: 100%, height: 100%, #{"fill: black, text(white)" if highlighted}[#{name}]))"
               end
             end
 
