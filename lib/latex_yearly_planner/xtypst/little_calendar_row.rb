@@ -7,7 +7,8 @@ module LatexYearlyPlanner
         week_with_numbers: true,
         link_to_week: true,
         week_number_placement: 'left',
-        highlight_day: nil
+        highlight_day: nil,
+        highlight_week_numbers: false
       }.freeze
 
       attr_reader :week, :parameters
@@ -38,9 +39,10 @@ module LatexYearlyPlanner
       end
 
       def week_label
-        return "[#{week.number}]" unless parameters[:link_to_week]
-
-        "link(<#{week.id}>, [#{week.number}])"
+        content = "[#{week.number}]"
+        content = "link(<#{week.id}>, #{content})" if parameters[:link_to_week]
+        content = "table.cell(fill: silver, #{content})" if parameters[:highlight_week_numbers]
+        content
       end
 
       def row_internal
