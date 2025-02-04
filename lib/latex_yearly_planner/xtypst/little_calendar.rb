@@ -33,7 +33,7 @@ module LatexYearlyPlanner
           table(
             columns: #{columns},
             align: center + horizon,
-            inset: #{parameters[:inset]},
+            inset: 0mm,
             stroke: 0mm,
             #{highlight_week}
             table.cell(colspan: #{number_of_columns}, #{month_name}),

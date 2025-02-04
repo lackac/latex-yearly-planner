@@ -5,6 +5,7 @@ module LatexYearlyPlanner
     class LittleWeekdaysRow
       WEEKDAYS = %i[monday tuesday wednesday thursday friday saturday sunday].freeze
       DEFAULT_PARAMETERS = {
+        inset: '1.5mm',
         with_week_numbers: true,
         underline_weekdays: true,
         sideline_week_numbers: true,
@@ -64,11 +65,11 @@ module LatexYearlyPlanner
       end
 
       def one_letter_day(day)
-        "[#{i18n.t("calendar.one_letter.#{day}")}]"
+        "table.cell(inset: #{parameters[:inset]}, [#{i18n.t("calendar.one_letter.#{day}")}])"
       end
 
       def one_letter_week
-        "[#{i18n.t('calendar.one_letter.week')}]"
+        "table.cell(inset: #{parameters[:inset]}, [#{i18n.t('calendar.one_letter.week')}])"
       end
     end
   end

@@ -4,6 +4,7 @@ module LatexYearlyPlanner
   module Xtypst
     class LittleCalendarRow
       DEFAULT_PARAMETERS = {
+        inset: '1.5mm',
         week_with_numbers: true,
         link_to_week: true,
         week_number_placement: 'left',
@@ -39,9 +40,9 @@ module LatexYearlyPlanner
       end
 
       def week_label
-        content = "[#{week.number}]"
+        content = "block(inset: #{parameters[:inset]}, [#{week.number}])"
         content = "link(<#{week.id}>, #{content})" if parameters[:link_to_week]
-        content = "table.cell(fill: silver, #{content})" if parameters[:highlight_week_numbers]
+        content = "table.cell(fill: luma(238), #{content})" if parameters[:highlight_week_numbers]
         content
       end
 
@@ -51,9 +52,12 @@ module LatexYearlyPlanner
 
       def map_day(day)
         return '[]' unless day
-        return "link(<#{day.id}>, [#{day.day}])" if parameters[:highlight_day] != day
 
-        "table.cell(fill: black, link(<#{day.id}>, text(white)[#{day.day}]))"
+        highlight = parameters[:highlight_day] == day
+
+        content = "link(<#{day.id}>, block(inset: #{parameters[:inset]}, #{'text(white)' if highlight}[#{day.day}]))"
+        content = "table.cell(fill: black, #{content})" if highlight
+        content
       end
     end
   end
