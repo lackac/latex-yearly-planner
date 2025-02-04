@@ -32,7 +32,7 @@ module LatexYearlyPlanner
                   bottom: 1mm,
                   [*#{i18n.t("calendar.weekdays.full.#{day.name.downcase}")}*]
                 ),
-                pad(left: 2mm, top: 1mm, [#{i18n.t("calendar.month.#{day.month.name.downcase}")}]),
+                pad(left: 2mm, top: 1mm, link(<#{day.month.id}>, [#{i18n.t("calendar.month.#{day.month.name.downcase}")}])),
               )<#{day.id}>]
             TYPST
           end

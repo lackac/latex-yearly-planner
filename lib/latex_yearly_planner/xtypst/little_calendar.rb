@@ -4,6 +4,7 @@ module LatexYearlyPlanner
   module Xtypst
     class LittleCalendar
       DEFAULT_PARAMETERS = {
+        month_label: true,
         with_week_numbers: true,
         week_number_placement: 'left',
         inset: '1.5mm',
@@ -36,7 +37,7 @@ module LatexYearlyPlanner
             inset: 0mm,
             stroke: 0mm,
             #{highlight_week}
-            table.cell(colspan: #{number_of_columns}, #{month_name}),
+            #{month_label}
             #{weekdays_row},
             #{weeks}
           )
@@ -57,6 +58,12 @@ module LatexYearlyPlanner
         8
       end
 
+      def month_label
+        return '' unless parameters[:month_label]
+
+        "table.cell(colspan: #{number_of_columns}, inset: #{parameters[:inset]}, strong(#{month_name})),"
+      end
+
       def highlight_week
         return '' unless parameters[:highlight_week]
         return '' unless highlighted_day
@@ -65,7 +72,7 @@ module LatexYearlyPlanner
       end
 
       def highlighted_week_number_in_this_month
-        highlighted_day.week.number - month.weeks.first.number + 2
+        highlighted_day.week.number - month.weeks.first.number + (parameters[:month_label] ? 2 : 1)
       end
 
       def month_name

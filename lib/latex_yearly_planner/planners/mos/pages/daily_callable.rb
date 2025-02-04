@@ -25,7 +25,7 @@ module LatexYearlyPlanner
           end
 
           def my_little_calendar
-            Xtypst::LittleCalendar.new(day.month, highlight_day: day, i18n:, **params.object(:little_calendar)).to_typst
+            Xtypst::LittleCalendar.new(day.month, highlight_day: day, i18n:, **params.object(:little_calendar), month_label: false).to_typst
           end
 
           def my_top_priorities
