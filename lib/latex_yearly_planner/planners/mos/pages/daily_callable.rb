@@ -28,6 +28,27 @@ module LatexYearlyPlanner
             Xtypst::LittleCalendar.new(day.month, highlight_day: day, i18n:, **params.object(:little_calendar), month_label: false).to_typst
           end
 
+          def my_metrics
+            <<~TYPST
+              stack(
+                dir: ttb,
+                spacing: 0.25 * line_height,
+                box(height: line_height, width: 100%, inset: 5pt, fill: silver, align(horizon, [#{i18n.t('daily_metrics')}])),
+                box(height: #{params.get(:metrics_height)}, width: 100%,
+                  rect_pattern(#{params.get(:pattern)}) +
+                  place(right + bottom, dx: -0.1 * line_height - thin_stroke, dy: -0.1 * line_height - thin_stroke,
+                    stack(
+                      dir: ltr,
+                      spacing: 0.5 * line_height,
+                      box(height: 0.8 * line_height, align(horizon, [_#{i18n.t('shutdown_complete')}_])),
+                      box(width: 0.8 * line_height, height: 0.8 * line_height, stroke: thin_stroke, radius: stroke_width)
+                    )
+                  )
+                ),
+              )
+            TYPST
+          end
+
           def my_top_priorities
             <<~TYPST
               pad(bottom: line_height, table(
@@ -63,6 +84,12 @@ module LatexYearlyPlanner
                 box(height: line_height, width: 100%, inset: 5pt, fill: silver, align(horizon, [#{i18n.t('personal_notes')}])),
                 box(height: #{params.get(:personal_notes_height)}, width: 100%, rect_pattern(#{params.get(:pattern)})),
               )
+            TYPST
+          end
+
+          def my_grid
+            <<~TYPST
+              box(height: 100%, width: 100%, rect_pattern(#{params.get(:pattern)})),
             TYPST
           end
 
