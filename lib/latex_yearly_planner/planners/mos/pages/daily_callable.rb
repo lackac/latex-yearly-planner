@@ -34,7 +34,7 @@ module LatexYearlyPlanner
                 columns: 1fr,
                 inset: 0mm,
                 stroke: (_, _) => (bottom: thin_stroke + black),
-                table.cell(stroke: (bottom: stroke_width), box(height: line_height, align(horizon, [#{i18n.t('top_priorities')}]))),
+                table.cell(stroke: 0pt, box(height: line_height, width: 100%, inset: 5pt, fill: silver, align(horizon, [#{i18n.t('top_priorities')}]))),
                 #{top_priorities_lines}
               ))
             TYPST
@@ -44,9 +44,10 @@ module LatexYearlyPlanner
             <<~TYPST
               stack(
                 dir: ttb,
-                spacing: line_height,
+                spacing: 0.25 * line_height,
                 box(
-                  height: line_height, width: 100%, stroke: (bottom: stroke_width),
+                  height: line_height, width: 100%, inset: 5pt,
+                  fill: silver,
                   align(horizon, [#{i18n.t('daily_notes')}#{more_daily_notes}#{daily_reflect}])
                 ),
                 box(height: #{params.get(:notes_height)}, width: 100%, rect_pattern(#{params.get(:pattern)})),
@@ -58,8 +59,8 @@ module LatexYearlyPlanner
             <<~TYPST
               stack(
                 dir: ttb,
-                spacing: line_height,
-                box(height: line_height, width: 100%, stroke: (bottom: stroke_width), align(horizon, [#{i18n.t('personal_notes')}])),
+                spacing: 0.25 * line_height,
+                box(height: line_height, width: 100%, inset: 5pt, fill: silver, align(horizon, [#{i18n.t('personal_notes')}])),
                 box(height: #{params.get(:personal_notes_height)}, width: 100%, rect_pattern(#{params.get(:pattern)})),
               )
             TYPST
