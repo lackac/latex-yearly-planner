@@ -18,13 +18,10 @@ module LatexYearlyPlanner
           end
 
           def content
-            first_name_height = params.get(:first_row_height)
-            name_height = params.get(:rest_row_height)
-
             <<~TYPST
               grid(
-                columns: (1fr, 1fr),
-                rows: (#{first_name_height}, 1fr, #{name_height}, 1fr, #{name_height}, 1fr, #{name_height}, 1fr),
+                columns: (1fr, 1fr#{', 1fr' if params.get(:compact_weekdays)}),
+                rows: (#{weekly_rows}),
                 #{weekly_grid}
               )
             TYPST
@@ -48,14 +45,34 @@ module LatexYearlyPlanner
             "#hide[~#{week.ids.map { |id| "<#{id}>" }.join(' ~')}]"
           end
 
+          def weekly_rows
+            first_name_height = params.get(:first_row_height)
+            name_height = params.get(:rest_row_height)
+            rows = params.get(:generic_jotting_space) ? "#{params.get(:generic_jotting_space_height)}, " : ""
+            rows += "#{first_name_height}, 1fr, #{name_height}, 1fr"
+            rows += ", #{name_height}, 1fr, #{name_height}, 1fr" unless params.get(:compact_weekdays)
+            rows
+          end
+
           def weekly_grid
-            week.days.map(&method(:format_day)).map(&method(:align_day)).push('[]')
-                .each_slice(2).map { |slice| slice.join(', ') }
-                .join(",\n#{jotting_space},\n") + ",\n#{jotting_space}"
+            (params.get(:generic_jotting_space) ? "#{jotting_space},\n" : "") +
+              day_rows.join(",\n#{jotting_space},\n") + ",\n#{jotting_space}\n"
+          end
+
+          def day_rows
+            compact_weekdays = params.get(:compact_weekdays)
+            days = week.days.map(&method(:format_day))
+            if compact_weekdays
+              last_day = days.pop
+              days[-1] += " + h(1fr) + #{last_day}"
+            else
+              days.push('[]')
+            end
+            days.map(&method(:align_day)).each_slice(compact_weekdays ? 3 : 2).map { |slice| slice.join(', ') }
           end
 
           def jotting_space
-            @jotting_space ||= "grid.cell(colspan: 2, rect_pattern(#{params.get(:pattern)}))"
+            @jotting_space ||= "grid.cell(colspan: #{params.get(:compact_weekdays) ? 3 : 2}, rect_pattern(#{params.get(:pattern)}))"
           end
 
           def format_day(day)
