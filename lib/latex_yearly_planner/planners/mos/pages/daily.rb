@@ -39,11 +39,15 @@ module LatexYearlyPlanner
 
           def content
             <<~TYPST
-              grid(
-                columns: (#{params.get(:left_column_width)}, #{params.get(:gap_width)}, 1fr),
-                #{left_column},
-                [],
-                #{right_column}
+              box(
+                width: 100%, height: 100%,
+                #{"place(rect_pattern(#{params.get(:pattern)})) +" if background_grid?}
+                grid(
+                  columns: (#{params.get(:left_column_width)}, 1fr),
+                  gutter: #{params.get(:gap_width)},
+                  #{left_column},
+                  #{right_column}
+                )
               )
             TYPST
           end
@@ -69,15 +73,20 @@ module LatexYearlyPlanner
           private
 
           def left_column
-            "stack(dir: ttb, #{run_methods_of(:left_column_items)})"
+            "stack(dir: ttb, spacing: 0.25 * line_height, #{run_methods_of(:left_column_items)})"
           end
 
           def right_column
-            "stack(dir: ttb, #{run_methods_of(:right_column_items)})"
+            "stack(dir: ttb, spacing: 0.25 * line_height, #{run_methods_of(:right_column_items)})"
           end
 
           def run_methods_of(column)
-            params.get(column).map { |meth| send("my_#{meth}") }.join(",\n")
+            items = params.get(:"#{day.name.downcase}_#{column}") || params.get(column)
+            items.map { |meth| send("my_#{meth}") }.join(",\n")
+          end
+
+          def background_grid?
+            params.get(:"#{day.name.downcase}_background_grid") || params.get(:background_grid)
           end
         end
       end
