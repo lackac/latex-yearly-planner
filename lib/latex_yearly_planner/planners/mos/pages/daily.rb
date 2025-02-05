@@ -24,7 +24,7 @@ module LatexYearlyPlanner
                 align: left,
                 grid.cell(
                   rowspan: 2,
-                  stroke: (right: 0.4pt),
+                  stroke: (right: thin_stroke),
                   pad(right: 2mm, text(#{params.get(:heading_size)})[#{day.day}])
                 ),
                 pad(

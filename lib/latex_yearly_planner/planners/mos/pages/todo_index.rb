@@ -80,7 +80,7 @@ module LatexYearlyPlanner
                 box(
                   height: #{params.get(:cell_height)},
                   width: 100%,
-                  stroke: (bottom: 0.4pt + gray),
+                  stroke: (bottom: thin_stroke + gray),
                   align(horizon, link(<tp-#{item}>, [#{item}.]))
                 )
               TYPST

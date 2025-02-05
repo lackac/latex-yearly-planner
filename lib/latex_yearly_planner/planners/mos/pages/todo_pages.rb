@@ -55,10 +55,10 @@ module LatexYearlyPlanner
 
           def todos_block
             <<~TYPST
-              pad(bottom: 5mm, table(
+              pad(bottom: line_height, table(
                 columns: 1fr,
                 inset: 0mm,
-                stroke: (_, _) => (bottom: 0.4pt + black),
+                stroke: (_, _) => (bottom: thin_stroke + black),
                 #{todos_lines}
               ))
             TYPST

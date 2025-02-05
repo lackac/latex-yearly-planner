@@ -14,25 +14,29 @@
   size: <%= planner_config.config[:document][:text][:size] %>,
 )
 
+#let stroke_width = 1pt
+#let thin_stroke = 0.5pt
+#let line_height = 5.5mm
+
 #let dotted = pattern(
-  size: (5mm, 5mm),
+  size: (line_height, line_height),
   place(
-    dx: 0.5pt,
-    dy: 0.5pt,
+    dx: thin_stroke,
+    dy: thin_stroke,
     circle(
-      radius: 0.4pt,
-      fill: black
+      radius: thin_stroke,
+      fill: luma(25%)
     )
   ),
 )
 
 #let lined = pattern(
-  size: (5mm, 5mm),
+  size: (line_height, line_height),
   place(
     line(
       start: (0%, 6%),
       end: (100%, 6%),
-      stroke: 0.4pt
+      stroke: thin_stroke
     ),
   )
 )
@@ -48,16 +52,16 @@
   stack(
     dir: ttb,
     spacing: 1fr,
-    ..content, stack(dir: ttb, spacing: 5mm, last_content, [])
+    ..content, stack(dir: ttb, spacing: line_height, last_content, [])
   )
 }
 
 #let jot(pattern, height, name) = {
   stack(
     dir: ttb,
-    spacing: 5mm,
+    spacing: line_height,
     box(
-      height: 5mm, width: 100%, stroke: (bottom: 1pt),
+      height: line_height, width: 100%, stroke: (bottom: stroke_width),
       align(horizon, name)
     ),
     box(
@@ -67,7 +71,7 @@
   )
 }
 
-#let black_table_cell(text) = table.cell( fill: black, text)
+#let black_table_cell(text) = table.cell(fill: black, text)
 
 <% text_documents.each do |doc| %>
 <%= doc.content %>

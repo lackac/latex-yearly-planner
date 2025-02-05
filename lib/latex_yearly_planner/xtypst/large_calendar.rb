@@ -26,7 +26,7 @@ module LatexYearlyPlanner
       def to_typst
         <<~TYPST
           table(
-            stroke: 0.4pt,
+            stroke: thin_stroke,
             columns: (#{columns}),
             rows: (#{parameters[:heading_height]}, #{([parameters[:week_row_height]] * (month.weeks.size - 1)).join(', ')}),
             align: top + left,

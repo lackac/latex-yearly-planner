@@ -101,7 +101,7 @@ module LatexYearlyPlanner
                     origin: center + horizon,
                     reflow: true,
                     table(
-                      stroke: (x, y) => (left: 0.4pt, right: 0.4pt),
+                      stroke: (x, y) => (left: thin_stroke, right: thin_stroke),
                       inset: 0pt,
                       columns: (#{side_menu_columns}),
                       rows: 1fr,
@@ -211,7 +211,7 @@ module LatexYearlyPlanner
 
               <<~TYPST
                 table(
-                  stroke: (x, y) => (left: 0.4pt, right: 0.4pt),
+                  stroke: (x, y) => (left: thin_stroke, right: thin_stroke),
                   columns: #{menu_items_content.size},
                   rows: 1fr,
                   align: horizon + center,

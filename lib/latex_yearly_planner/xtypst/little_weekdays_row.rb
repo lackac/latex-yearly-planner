@@ -41,7 +41,7 @@ module LatexYearlyPlanner
       def apply_underline_weekdays!
         return unless parameters[:underline_weekdays]
 
-        weekdays_row_internal.unshift("table.hline(y: #{parameters[:month_label] ? 2 : 1}, stroke: 0.4pt)")
+        weekdays_row_internal.unshift("table.hline(y: #{parameters[:month_label] ? 2 : 1}, stroke: thin_stroke)")
       end
 
       def apply_week_number_placement!
@@ -54,7 +54,7 @@ module LatexYearlyPlanner
         return unless parameters[:sideline_week_numbers]
 
         x = parameters[:week_number_placement] == 'left' ? 1 : 7
-        weekdays_row_internal.unshift("table.vline(x: #{x}, stroke: 0.4pt)")
+        weekdays_row_internal.unshift("table.vline(x: #{x}, stroke: thin_stroke)")
       end
 
       def weekdays_row_internal
