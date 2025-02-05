@@ -32,8 +32,8 @@ module LatexYearlyPlanner
             <<~TYPST
               stack(
                 dir: ttb,
-                spacing: 0.25 * line_height,
-                box(height: line_height, width: 100%, inset: 5pt, fill: silver, align(horizon, [#{i18n.t('daily_metrics')}])),
+                spacing: 0.2 * line_height,
+                box(height: 0.8 * line_height, width: 100%, inset: 5pt, fill: silver, align(horizon, [#{i18n.t('daily_metrics')}])),
                 box(height: #{params.get(:metrics_height)}, width: 100%,
                   rect_pattern(#{params.get(:pattern)}) +
                   place(right + bottom, dx: -0.1 * line_height - thin_stroke, dy: -0.1 * line_height - thin_stroke,
@@ -65,11 +65,11 @@ module LatexYearlyPlanner
             <<~TYPST
               stack(
                 dir: ttb,
-                spacing: 0.25 * line_height,
+                spacing: 0.2 * line_height,
                 box(
-                  height: line_height, width: 100%, inset: 5pt,
+                  height: 0.5 * line_height, width: 100%, inset: 5pt,
                   fill: silver,
-                  align(horizon, [#{i18n.t('daily_notes')}#{more_daily_notes}#{daily_reflect}])
+                  align(horizon, text(0.9em)[#{i18n.t('daily_notes')}#{more_daily_notes}#{daily_reflect}])
                 ),
                 box(height: #{params.get(:notes_height)}, width: 100%, rect_pattern(#{params.get(:pattern)})),
               )
@@ -80,8 +80,8 @@ module LatexYearlyPlanner
             <<~TYPST
               stack(
                 dir: ttb,
-                spacing: 0.25 * line_height,
-                box(height: line_height, width: 100%, inset: 5pt, fill: silver, align(horizon, [#{i18n.t('personal_notes')}])),
+                spacing: 0.2 * line_height,
+                box(height: 0.5 * line_height, width: 100%, inset: 5pt, fill: silver, align(horizon, text(0.9em)[#{i18n.t('personal_notes')}])),
                 box(height: #{params.get(:personal_notes_height)}, width: 100%, rect_pattern(#{params.get(:pattern)})),
               )
             TYPST

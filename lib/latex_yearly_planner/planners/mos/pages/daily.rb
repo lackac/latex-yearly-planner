@@ -73,11 +73,11 @@ module LatexYearlyPlanner
           private
 
           def left_column
-            "stack(dir: ttb, spacing: 0.25 * line_height, #{run_methods_of(:left_column_items)})"
+            "stack(dir: ttb, spacing: 0.2 * line_height, #{run_methods_of(:left_column_items)})"
           end
 
           def right_column
-            "stack(dir: ttb, spacing: 0.25 * line_height, #{run_methods_of(:right_column_items)})"
+            "stack(dir: ttb, spacing: 0.2 * line_height, #{run_methods_of(:right_column_items)})"
           end
 
           def run_methods_of(column)
