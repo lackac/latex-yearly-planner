@@ -6,7 +6,7 @@ module LatexYearlyPlanner
       module Pages
         module DailyCallable
           def my_gap
-            'box(height: line_height)'
+            'v(1fr)'
           end
 
           def my_schedule
