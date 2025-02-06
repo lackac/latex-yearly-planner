@@ -69,7 +69,7 @@ planner:
       link_to_week: true
       weekday_names: full
       heading_height: 5.5mm
-      week_row_height: 22mm
+      week_row_height: 1fr
       week_cell_rotate: 90deg
 
   sections:
@@ -99,6 +99,7 @@ planner:
         enabled: true
         parameters:
           gap_width: 5mm
+          habit_tracker: true
 
     - interleaved_weekly_and_daily:
         enabled: true
