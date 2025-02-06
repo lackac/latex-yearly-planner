@@ -19,11 +19,12 @@ module LatexYearlyPlanner
 
           def content
             <<~TYPST
-              stack(
-                dir: ttb,
-                spacing: #{params.get(:gap_width)},
+              grid(
+                columns: 1,
+                rows: #{params.get(:habit_tracker) ? "(1fr, #{params.get(:habit_tracker_height) || "40%"})" : "2"},
+                gutter: #{params.get(:gap_width)},
                 #{Xtypst::LargeCalendar.new(month, **params.object(:large_calendar)).to_typst},
-                rect_pattern(#{params.get(:pattern)})
+                #{lower_half}
               )
             TYPST
           end
@@ -34,6 +35,27 @@ module LatexYearlyPlanner
 
           def highlight_side_menu_months
             [month]
+          end
+
+          private
+
+          def lower_half
+            if params.get(:habit_tracker)
+              days = month.moment.end_of_month.day
+              rows = params.get(:habit_tracker_rows) || 18
+              cell_size = params.get(:habit_tracker_cell_size) || '0.67 * line_height'
+              <<~TYPST
+                text(#{params.get(:habit_tracker_font_size) || '0.8em'}, table(
+                  columns: (1fr, #{([cell_size] * days).join(', ')}),
+                  rows: (#{([cell_size] * (rows + 1)).join(', ')}),
+                  inset: (x: 0pt, y: 2pt), align: (center + bottom),
+                  stroke: (x, y) => if y == 0 { none } else if x == 0 { (bottom: (thickness: thin_stroke, dash: "dotted")) } else { thin_stroke },
+                  [], ..range(1, #{days + 1}).map(i => [#i])
+                ))
+              TYPST
+            else
+              "rect_pattern(#{params.get(:pattern)})"
+            end
           end
         end
       end
