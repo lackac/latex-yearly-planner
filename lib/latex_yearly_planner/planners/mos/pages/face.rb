@@ -124,7 +124,9 @@ module LatexYearlyPlanner
             end
 
             def make_columns
-              ([mosnav[:quarter_width]] * params.quarters.size)
+              [mosnav[:year_width]]
+                .append('auto')
+                .append([mosnav[:quarter_width]] * params.quarters.size)
                 .append('auto')
                 .append([mosnav[:month_width]] * params.months.size)
             end
@@ -138,11 +140,24 @@ module LatexYearlyPlanner
                 months.reverse!
               end
 
-              side_menu = [quarters.join(', '), 'table.cell(inset: 5pt, [])', months.join(', ')]
+              side_menu = [
+                make_side_menu_year, 'table.cell(inset: 5pt, [])',
+                quarters.join(', '), 'table.cell(inset: 5pt, [])',
+                months.join(', ')
+              ]
 
               side_menu.reverse! if mosnav[:reverse_arrays]
 
               side_menu.join(', ')
+            end
+
+            def make_side_menu_year
+              highlighted = section_config.name == :annual
+              label = params.months.first.year
+              content = "block(width: 100%, height: 100%, #{'fill: black, text(white)' if highlighted}[#{label}])"
+              return content unless params.section_enabled?(:annual)
+
+              "link(<annual-1>, #{content})"
             end
 
             def make_side_menu_quarters
@@ -233,7 +248,7 @@ module LatexYearlyPlanner
             end
 
             def annual_menu_item
-              return nil unless params.section_enabled?(:annual)
+              return nil unless params.section_enabled?(:annual) && !params.object(:mos_layout)[:omit_annual_menu_item]
 
               name = i18n.t('menu_calendar')
 
