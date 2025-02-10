@@ -36,6 +36,7 @@ planner:
       side_menu: left
       mos_nav_width: 6.5mm
       heading_height: 9mm
+      omit_annual_menu_item: true
 
     mos_nav:
       left_pad: 0mm
@@ -43,6 +44,7 @@ planner:
       rotate: 90deg
       reverse_array_internals: false
       reverse_arrays: false
+      year_width: 1.2fr
       quarter_width: 1.1fr
       month_width: 1fr
 
