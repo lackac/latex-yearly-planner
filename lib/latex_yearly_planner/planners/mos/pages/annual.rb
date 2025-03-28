@@ -54,7 +54,7 @@ module LatexYearlyPlanner
           end
 
           def page_number
-            (params.months.find_index(month_rows.first.first) / params.get(:months_per_page)) + 1
+            (params.all_months_in_year.find_index(month_rows.first.first) / params.get(:months_per_page)) + 1
           end
 
           def row_stack(months)

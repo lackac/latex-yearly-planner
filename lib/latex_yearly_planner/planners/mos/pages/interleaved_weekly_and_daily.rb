@@ -16,7 +16,8 @@ module LatexYearlyPlanner
             self
           end
 
-          delegate :title, :content, :extra_menu_items, :highlight_side_menu_months, :highlight_side_menu_quarters, :top_menu_month, to: :@real_page
+          delegate :title, :content, :extra_menu_items, :highlight_side_menu_months, :highlight_side_menu_quarters,
+                   :top_menu_month, to: :@real_page
         end
       end
     end

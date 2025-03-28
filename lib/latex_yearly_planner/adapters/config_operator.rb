@@ -20,6 +20,12 @@ module LatexYearlyPlanner
           .merge(section_config.section_config.dig(:objects, key) || {})
       end
 
+      def all_months_in_year
+        (start_date.beginning_of_year..end_date.end_of_year)
+          .select { |date| date.mday == 1 }
+          .map(&method(:initialize_month))
+      end
+
       def months
         (start_date..end_date)
           .select { |date| date.mday == 1 }

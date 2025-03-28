@@ -14,7 +14,7 @@ module LatexYearlyPlanner
           private
 
           def months
-            params.months
+            params.all_months_in_year
           end
 
           def months_per_page
