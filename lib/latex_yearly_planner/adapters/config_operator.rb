@@ -32,14 +32,14 @@ module LatexYearlyPlanner
 
       def weeks
         @weeks ||= start_date.beginning_of_week(weekday_start)
-                             .upto(end_date.end_of_month.end_of_week(weekday_start))
+                             .upto(end_date.end_of_week(weekday_start))
                              .each_slice(7)
                              .map { |days| days.map { |day| Calendar::Day.new(moment: day, weekday_start:) } }
                              .map { |days| Calendar::Week.new(days:, weekday_start:) }
       end
 
       def days
-        @days ||= start_date.upto(end_date.end_of_month).map { |day| Calendar::Day.new(moment: day, weekday_start:) }
+        @days ||= start_date.upto(end_date).map { |day| Calendar::Day.new(moment: day, weekday_start:) }
       end
 
       def section_enabled?(section_name)

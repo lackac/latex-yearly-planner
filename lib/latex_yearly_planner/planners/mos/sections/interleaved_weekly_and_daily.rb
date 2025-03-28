@@ -6,10 +6,8 @@ module LatexYearlyPlanner
       module Sections
         class InterleavedWeeklyAndDaily < Section
           def pages
-            first_day = params.months.first.first_day
-            last_day = params.months.last.last_day
             params.weeks.flat_map do |week|
-              [week].concat(week.days.filter { |d| d >= first_day && d <= last_day })
+              [week].concat(week.days)
             end
           end
         end

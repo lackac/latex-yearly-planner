@@ -1,3 +1,11 @@
+#show link: it => {
+  if type(it.dest) != "label" or query(it.dest).len() > 0 {
+    it
+  } else {
+    it.body
+  }
+}
+
 #set page(
   width: <%= planner_config.config[:document][:layout][:dimensions][:width] %>,
   height: <%= planner_config.config[:document][:layout][:dimensions][:height] %>,

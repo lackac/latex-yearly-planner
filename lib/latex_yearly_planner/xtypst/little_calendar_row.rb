@@ -55,7 +55,8 @@ module LatexYearlyPlanner
 
         highlight = parameters[:highlight_day] == day
 
-        content = "link(<#{day.id}>, block(inset: #{parameters[:inset]}, #{'text(white)' if highlight}[#{day.day}]))"
+        content = "block(inset: #{parameters[:inset]}, #{'text(white)' if highlight}[#{day.day}])"
+        content = "link(<#{day.id}>, #{content})"
         content = "table.cell(fill: black, #{content})" if highlight
         content
       end
