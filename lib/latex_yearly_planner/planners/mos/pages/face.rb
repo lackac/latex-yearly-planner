@@ -163,7 +163,7 @@ module LatexYearlyPlanner
             def make_side_menu_quarters
               params.quarters.map do |q|
                 name = i18n.t('calendar.one_letter.quarter')
-                highlighted = highlight_side_menu_quarters.include?(q)
+                highlighted = (params.quarters.size > 1 && highlight_side_menu_quarters.include?(q)) || (params.quarters.size == 1 && section_config.name == :quarterly)
 
                 "link(<#{q.id}>, block(width: 100%, height: 100%, #{"fill: black, text(white)" if highlighted}[#{name}#{q.number}]))"
               end
