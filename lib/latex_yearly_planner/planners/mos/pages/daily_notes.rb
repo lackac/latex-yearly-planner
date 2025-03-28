@@ -48,6 +48,14 @@ module LatexYearlyPlanner
             ["link(<#{day.week.id}>, [#{i18n.t('calendar.weekdays.full.week')} #{day.week.number}])"]
           end
 
+          def highlight_side_menu_months
+            [day.month]
+          end
+
+          def highlight_side_menu_quarters
+            [day.quarter]
+          end
+
           private
 
           def heading_size

@@ -8,11 +8,11 @@ module LatexYearlyPlanner
           def set(week_or_day)
             @real_page =
               case week_or_day
-              when Calendar::Week then Weekly.new(section_config:, i18n:)
-              when Calendar::Day  then Daily.new(section_config:, i18n:)
+              in Calendar::Week               then Weekly.new(section_config:, i18n:).set(week_or_day)
+              in Calendar::Day                then Daily.new(section_config:, i18n:).set(week_or_day)
+              in Calendar::Day => day, :notes then DailyNotes.new(section_config:, i18n:).set([day, 1])
               else raise DevelopmentError, "don't know how to interleave a #{week_or_day.class.name} page"
               end
-            @real_page.set(week_or_day)
             self
           end
 
