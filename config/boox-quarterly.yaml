@@ -1,0 +1,137 @@
+version: '0.1'
+
+template: mos
+locale: en_CN
+
+compiler:
+  ghostscript:
+    enable: true
+
+document:
+  layout:
+    dimensions:
+      width: 148.6mm
+      height: 198.1mm
+
+    margin:
+      top: 5.5mm
+      bottom: 5.5mm
+      left: 0mm
+      right: 4mm
+
+  text:
+    size: 10pt
+
+planner:
+  parameters:
+    start_date: 2025, March 31
+    end_date: 2025, June 29
+    weekday_start: Monday
+
+    heading_size: 16pt
+    pattern: dotted
+
+  objects:
+    mos_layout:
+      side_menu: left
+      mos_nav_width: 6.5mm
+      heading_height: 9mm
+      omit_annual_menu_item: true
+
+    mos_nav:
+      left_pad: 0mm
+      right_pad: 1.75mm
+      rotate: 90deg
+      reverse_array_internals: false
+      reverse_arrays: false
+      year_width: 1.2fr
+      quarter_width: 1.1fr
+      month_width: 1fr
+
+    heading:
+      bottom_pad: 2mm
+      put_extra_items: left
+      title_position: left
+
+    little_calendar:
+      with_week_numbers: true
+      week_number_placement: left
+      inset: 1mm
+      underline_weekdays: true
+      highlight_week_numbers: true
+      sideline_week_numbers: true
+      highlight_week: true
+      link_to_month: true
+      link_to_week: true
+      take_full_width: true
+
+    large_calendar:
+      with_week_numbers: true
+      week_number_placement: left
+      link_to_week: true
+      weekday_names: full
+      heading_height: 5.5mm
+      week_row_height: 1fr
+      week_cell_rotate: 90deg
+
+  sections:
+    - title:
+        enabled: true
+        parameters:
+          name: "2025 Q2"
+          font_size: 64pt
+
+    - annual:
+        enabled: true
+        parameters:
+          months_per_page: 12
+          months_per_row: 3
+        objects:
+          little_calendar:
+            take_full_width: false
+
+    - quarterly:
+        enabled: true
+        parameters:
+          months_width: 5cm
+          gap_width: 5mm
+          reverse_columns: false
+
+    - monthly:
+        enabled: true
+        parameters:
+          gap_width: 5mm
+          habit_tracker: true
+
+    - interleaved_weekly_and_daily:
+        enabled: true
+        parameters:
+          generic_jotting_space: true
+          generic_jotting_space_height: 50%
+          compact_weekdays: true
+          first_row_height: 8.25mm
+          rest_row_height: 8.25mm
+
+          left_column_width: 5.2cm
+
+          left_column_items: [ little_calendar, gap, schedule ]
+          right_column_items: [ metrics, notes, personal_notes ]
+
+          saturday_background_grid: true
+          saturday_left_column_items: [ little_calendar ]
+          saturday_right_column_items: []
+
+          sunday_background_grid: true
+          sunday_left_column_items: [ little_calendar ]
+          sunday_right_column_items: []
+
+          schedule_strftime: '%k'
+          schedule_from_hour: 8
+          schedule_to_hour: 19
+          schedule_trailing_30min: true
+
+          gap_width: 3mm
+
+          metrics_height: 3.355cm
+          notes_height: 5.005cm
+          personal_notes_height: 100%
