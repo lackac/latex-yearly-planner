@@ -4,6 +4,7 @@ module LatexYearlyPlanner
   module Xtypst
     class LargeCalendar
       DEFAULT_PARAMETERS = {
+        inset: '2mm',
         with_week_numbers: true,
         week_number_placement: 'left',
         weekday_names: 'full',
@@ -88,7 +89,7 @@ module LatexYearlyPlanner
       def linkify_day(day)
         return '[]' unless day
 
-        "link(<#{day.id}>, [#{day.day}])"
+        "table.cell(link(<#{day.id}>, block(inset: #{parameters[:inset]}, [#{day.day}])), inset: 0mm)"
       end
 
       def rotate_week(week)
