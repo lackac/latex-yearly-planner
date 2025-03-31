@@ -14,7 +14,18 @@ module LatexYearlyPlanner
           end
 
           def title
-            "text(#{params.get(:heading_size)})[#{i18n.t('calendar.weekdays.full.week')} #{week.number} #{labels}]"
+            label = "text(#{params.get(:heading_size)})[#{i18n.t('calendar.weekdays.full.week')} #{week.number}]"
+            cells = [prev_link, label, next_link].compact
+
+            <<~TYPST
+              table(
+                columns: #{cells.size},
+                inset: 0mm,
+                stroke: 0mm,
+                #{cells.join(',')}
+              ),
+              #{labels}
+            TYPST
           end
 
           def content
@@ -42,20 +53,42 @@ module LatexYearlyPlanner
           private
 
           def labels
-            "#hide[~#{week.ids.map { |id| "<#{id}>" }.join(' ~')}]"
+            "hide[~#{week.ids.map { |id| "<#{id}>" }.join(' ~')}]"
+          end
+
+          def index
+            @index ||= params.weeks.index(week)
+          end
+
+          def prev_link
+            return unless index > 0
+
+            prev_week = params.weeks[index - 1]
+            block_link(prev_week.id, '⟨')
+          end
+
+          def next_link
+            return unless index < params.weeks.size - 1
+
+            next_week = params.weeks[index + 1]
+            block_link(next_week.id, '⟩')
+          end
+
+          def block_link(target, label, inset: '1.5mm')
+            "link(<#{target}>, block(inset: #{inset}, [#{label}]))"
           end
 
           def weekly_rows
             first_name_height = params.get(:first_row_height)
             name_height = params.get(:rest_row_height)
-            rows = params.get(:generic_jotting_space) ? "#{params.get(:generic_jotting_space_height)}, " : ""
+            rows = params.get(:generic_jotting_space) ? "#{params.get(:generic_jotting_space_height)}, " : ''
             rows += "#{first_name_height}, 1fr, #{name_height}, 1fr"
             rows += ", #{name_height}, 1fr, #{name_height}, 1fr" unless params.get(:compact_weekdays)
             rows
           end
 
           def weekly_grid
-            (params.get(:generic_jotting_space) ? "#{jotting_space},\n" : "") +
+            (params.get(:generic_jotting_space) ? "#{jotting_space},\n" : '') +
               day_rows.join(",\n#{jotting_space},\n") + ",\n#{jotting_space}\n"
           end
 
