@@ -26,6 +26,7 @@ module LatexYearlyPlanner
         puts "Typst compilation time: #{typst_compile_time.real.round(2)}s"
 
         run_ghostscript
+        run_qpdf
       end
 
       private
@@ -52,6 +53,27 @@ module LatexYearlyPlanner
           -dAutoRotatePages=/None \
           -sOutputFile=#{workdir}/#{TEMP_FILE} \
           #{workdir}/#{OUTPUT_FILE}`
+      end
+
+      def run_qpdf
+        return unless planner_config.config.dig(:compiler, :qpdf, :enable)
+
+        puts 'Running qpdf...'
+        time = Benchmark.measure { qpdf_cmd }
+        raise 'Failed to slim PDF' unless $CHILD_STATUS.success?
+
+        puts "qpdf time: #{time.real.round(2)}s"
+
+        `mv #{workdir}/#{TEMP_FILE} #{workdir}/#{OUTPUT_FILE}`
+      end
+
+      def qpdf_cmd
+        `qpdf \
+          --recompress-flate \
+          --compression-level=9 \
+          --object-streams=generate \
+          #{workdir}/#{OUTPUT_FILE} \
+          #{workdir}/#{TEMP_FILE}`
       end
     end
   end
