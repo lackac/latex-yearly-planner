@@ -64,14 +64,14 @@ module LatexYearlyPlanner
             return unless index > 0
 
             prev_week = params.weeks[index - 1]
-            block_link(prev_week.id, '⟨')
+            block_link(prev_week.id, '⬅︎')
           end
 
           def next_link
             return unless index < params.weeks.size - 1
 
             next_week = params.weeks[index + 1]
-            block_link(next_week.id, '⟩')
+            block_link(next_week.id, '➡︎')
           end
 
           def block_link(target, label, inset: '1.5mm')
